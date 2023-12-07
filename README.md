@@ -1,26 +1,29 @@
-# Conso_dept
+# Visu E-Conso ![Consommation d'électricité](https://www.lenergietoutcompris.fr/uploads/images/consommation-electricite.jpg)
 
-Conso_dept is a project developed within the framework of a university course on database paradigms. It is a tool to graphically visualize the electrical consumption data of different French departments over the years.
+Visu E-Conso est un projet développé dans le cadre d'un cours universitaire "Nouveaux paradigmes des bases de données". 
+Notre outil permet de visualiser les données de consommation électrique des différents départements français au fil des années.
 
-## Objective
+## Fonctionnalités
 
-The main objective of this project is to provide an intuitive and informative visual representation of electrical consumption trends by department, using historical data.
+- Visualisation graphique des données de consommation électrique par département.
+- Comparaison des tendances de consommation entre différents départements.
+- Sélection interactive des années pour observer l'évolution au fil du temps.
+- Interface conviviale pour une expérience utilisateur fluide.
 
-## Features
+## Technologies utilisées
 
-- Graphical visualization of electrical consumption data by department.
-- Comparison of consumption trends between different departments.
-- Interactive selection of years to observe the evolution over time.
-- User-friendly interface for a smooth user experience.
+- **Langages**: JavaScript, HTML, CSS
+- **Bibliothèques**: Bootstrap
+- **Bases de données**: GraphDB
 
-## Technologies Used
+## Cloner le Projet
 
-- **Languages**: Python, HTML, CSS
-- **Libraries**: Pandas, Matplotlib, Flask
-- **Databases**: SQLite, SQLAlchemy
+Pour cloner le projet localement sur votre machine, utilisez la commande suivante dans votre terminal:
 
-## Installation
+```bash
+git clone https://github.com/votre_nom_utilisateur/Conso_dept.git
+```
 
-1. Clone this GitHub repository locally on your machine:
-   ```bash
-   git clone https://github.com/your_username/Conso_dept.git
+## Auteurs
+- [Antoine](https://github.com/Sechelige)
+- [Gaëtan](https://github.com/goueyeya)
