@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Exemple de Requête SPARQL</title>
+</head>
+<body>
+  <h1>Exemple de Requête SPARQL</h1>
+
+  <button onclick="executerRequeteSPARQL()">Exécuter Requête SPARQL</button>
+
+  <div id="resultats"></div>
+
+  <script>
+    function executerRequeteSPARQL() {
+      const endpointUrl = 'https://dbpedia.org/sparql'; // Exemple avec DBpedia
+
+      const query = `
+        PREFIX dbo: <http://dbpedia.org/ontology/>
+        PREFIX dbr: <http://dbpedia.org/resource/>
+        SELECT ?country ?population
+        WHERE {
+          ?country a dbo:Country ;
+                   dbo:populationTotal ?population .
+        }
+        LIMIT 10`;
+
+      fetch(endpointUrl + '?query=' + encodeURIComponent(query), {
+        method: 'GET',
+        headers: { 'Accept': 'application/sparql-results+json' }
+      })
+      .then(response => response.json())
+      .then(data => {
+        afficherResultats(data);
+      })
+      .catch(error => {
+        afficherErreur('Erreur lors de la requête SPARQL: ' + error);
+      });
+    }
+
+    function afficherResultats(data) {
+      const resultatsDiv = document.getElementById('resultats');
+      resultatsDiv.innerHTML = '<h2>Résultats de la requête SPARQL</h2>';
+
+      if (data.results.bindings.length > 0) {
+        const listeResultats = document.createElement('ul');
+
+        data.results.bindings.forEach(binding => {
+          const pays = binding['country'].value.split('/').pop();
+          const population = binding['population'].value;
+
+          const elementResultat = document.createElement('li');
+          elementResultat.textContent = `${pays} - Population: ${population}`;
+          listeResultats.appendChild(elementResultat);
+        });
+
+        resultatsDiv.appendChild(listeResultats);
+      } else {
+        resultatsDiv.innerHTML += '<p>Aucun résultat trouvé.</p>';
+      }
+    }
+
+    function afficherErreur(message) {
+      const resultatsDiv = document.getElementById('resultats');
+      resultatsDiv.innerHTML = '<h2>Erreur</h2>';
+      resultatsDiv.innerHTML += `<p>${message}</p>`;
+    }
+  </script>
+</body>
+</html>
+
