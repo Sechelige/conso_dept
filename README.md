@@ -14,7 +14,7 @@ Notre outil permet de visualiser les données de consommation électrique des di
 
 - **Langages**: JavaScript, HTML, CSS
 - **Bibliothèques**: Bootstrap
-- **Bases de données**: GraphDB
+- **Bases de données**: GraphDB, OnToRefine, Protégé
 
 ## Cloner le Projet
 
