@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Graphique à barres empilées avec Chart.js</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<canvas id="stackedBarChart" width="600" height="400"></canvas>
+
+<script>
+// Données pour le graphique
+const data = {
+  labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai'],
+  datasets: [
+    {
+      label: 'Produit A',
+      data: [12, 19, 3, 5, 2],
+      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      borderColor: 'rgba(255, 99, 132, 1)',
+      borderWidth: 1
+    },
+    {
+      label: 'Produit B',
+      data: [7, 11, 5, 8, 3],
+      backgroundColor: 'rgba(54, 162, 235, 0.5)',
+      borderColor: 'rgba(54, 162, 235, 1)',
+      borderWidth: 1
+    },
+    {
+      label: 'Produit C',
+      data: [9, 15, 8, 12, 6],
+      backgroundColor: 'rgba(255, 206, 86, 0.5)',
+      borderColor: 'rgba(255, 206, 86, 1)',
+      borderWidth: 1
+    }
+  ]
+};
+
+// Options du graphique
+const options = {
+  scales: {
+    x: {
+      stacked: true,
+    },
+    y: {
+      stacked: true
+    }
+  }
+};
+
+// Obtenez la référence du canvas HTML où vous voulez dessiner le graphique
+const ctx = document.getElementById('stackedBarChart').getContext('2d');
+
+// Créer un objet de graphique de type 'bar' en utilisant les données et les options
+const stackedBarChart = new Chart(ctx, {
+  type: 'bar',
+  data: data,
+  options: options
+});
+</script>
+
+</body>
+</html>
