@@ -93,7 +93,14 @@ function createCard(departement) {
             ]
         }
     };//executerRequeteSPARQL(endpointUrl, query_dep);
-    console.log(data_dep);
+
+    code_dep = data_dep.results.bindings[0].codeDep.value;
+    name_dep = data_dep.results.bindings[0].name.value;
+    flag_dep = data_dep.results.bindings[0].flag.value;
+    population_dep = data_dep.results.bindings[0].population.value;
+    image_dep = data_dep.results.bindings[0].image.value;
+
+    console.log(code_dep, name_dep, flag_dep, population_dep, image_dep);
     const query_conso = `"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX iut: <https://cours.iut-orsay.fr/npbd/projet/oueyeya/>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -114,55 +121,72 @@ function createCard(departement) {
     }
     ORDER BY ?codeDep
     `;
-    const data_conso = executerRequeteSPARQL(endpointUrl, query_conso);
-    console.log(data_conso);
-    // Création d'une nouvelle carte
+    //const data_conso = executerRequeteSPARQL(endpointUrl, query_conso);
+    //console.log(data_conso);
+    //Création d'une nouvelle carte
     const newCard = document.createElement('div');
-    newCard.className = 'card cartedep';
-    newCard.style.width = '75%';
 
     // Contenu de la carte
-    newCard.innerHTML = `
-        <div class="card" style="width: 18rem;">
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        </div>
-        <ul class="list-group list-group-flush">
-        <li class="list-group-item">An item</li>
-        <li class="list-group-item">A second item</li>
-        <li class="list-group-item">A third item</li>
-        </ul>
-        <div class="card-body">
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
-        </div>
+    newCard.innerHTML = `<div class="card" style="width: 75%; height: 85%;">
+    <div class="image" >
+    <img src="${image_dep}" class="card-img-top" style="max-width: 100%; max-height: 400px; height: auto;" alt="...">
     </div>
-    `;
-    return newCard;
+    <div class="card-body p-3">
+    <h4 class="card-title">${departement} ${name_dep}</h4>
+    </div>
+    <div class="container mt-0">
+      <h6>Données de consommation</h6>
+      <ul class="list-group mt-3">
+        <li class="list-group-item">Population actuelle du département: ${population_dep}</li>
+        <li class="list-group-item">Année : 2019</li>
+        <li class="list-group-item">Consommation E Totale (année : 2019): 12,331
+          <ul class="list-group mt-2">
+            <li class="list-group-item">Conso agriculture : 242,343</li>
+            <li class="list-group-item">Conso tertiaire : 9,882</li>
+            <li class="list-group-item">Conso Industrie : 8,987</li>
+            <li class="list-group-item">Conso Autre : 9,809</li>
+            <li class="list-group-item">Conso résidentielle : 32,932</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+    <a href="#" class="card-link">2019</a>
+    <a href="#" class="card-link">2020</a>
+    <a href="#" class="card-link">2020</a>
+
+    </div>
+</div>`;
+return newCard;
 }
 
+let currentCard = null; // Stocke la référence de la carte actuelle
 
 function onClickDepartement(departement) {
-    // On récupère le département
-    const card = createCard(departement);
-    // On l'ajoute à la page
-    document.getElementById('carte').appendChild(card);
-
+    const newCard = createCard(departement); // Crée une nouvelle carte pour le département
+    const carteElement = document.getElementById('carte');
+    // Vérifie s'il existe déjà une carte précédente, puis la supprime
+    if (currentCard !== null && carteElement.contains(currentCard)) {
+        carteElement.removeChild(currentCard);
+    }
+        // Supprime le contenu initial
+    carteElement.innerHTML = '';
+    // Ajoute la nouvelle carte à l'élément 'carte'
+    carteElement.appendChild(newCard);
+    // Met à jour la référence de la carte actuelle
+    currentCard = newCard;
 }
 
 departement.forEach((element) => {
-    document.getElementById(element).style.fill = 'rgba(190, 61, 10, 0.986)';
+    document.getElementById(element).style.fill = '#2d453b';
     document.getElementById(element).addEventListener('mouseover', function () {
         document.getElementById(element).style.fill = 'rgba(65, 194, 245, 0.986)';
     });
     document.getElementById(element).addEventListener('mouseout', function () {
-        document.getElementById(element).style.fill = 'rgba(190, 61, 10, 0.986)';
+        document.getElementById(element).style.fill = '#2d453b';
     });
 
     document.getElementById(element).addEventListener('click', function () {
-
         onClickDepartement(element.replace('dep_', ''));
     });
 });

@@ -8,14 +8,20 @@
 </head>
 
 <style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+  
     .svg-carte svg{
-      transform: scale(0.8);
+      transform: scale(0.75);
       color :rgba(190, 61, 10, 0.986);
     }
 </style>
 
 <body>
-<div class="container-fluid">
+<!--- <div class="container-fluid">
     <style>
       .navbar {
         background-color: #fff;
@@ -36,16 +42,11 @@
       Visu Econso
     </a>
   </nav>
-
-  <div class="container d-flex justify-content-center">
-    <div class="col">
-      <h4>Bienvenue sur notre site permettant de consulter la consommation électrique par département</h4>
-    </div>
-  </div>
+  </div>-->
 
 
     <div class="row">
-        <div class="col d-flex align-items-center justify-content-center">
+        <div class="col d-flex align-top">
           <div class="svg-carte">
           <svg xmlns="http://www.w3.org/2000/svg" width="900" height="1000">
             <g fill="none" stroke="#86aae0" stroke-width="1.5">
@@ -152,37 +153,23 @@
           </svg>  
         </div>
       </div>
-        <div class="col d-flex justify-content-center mt-5">
-          <div class="carte"></div>
-          <div class="card" style="width: 93%; height: 55%;">
-            <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Rivi%C3%A8re%20d%27Ain%20et%20hameau%20de%20Bombois%20%28Matafelon-Granges%29%20depuis%20Corveissiat.jpg" class="card-img-top" alt="...">
-            <div class="card-body p-3">
-            <h5 class="card-title">NON DEPARTEMENT</h5>
-            <p class="card-text">Voici les informations de consommation electrique</p>
-            </div>
-            <div class="container mt-0">
-              <h3>Données de consommation</h3>
-              <ul class="list-group mt-3">
-                <li class="list-group-item">Population actuelle du département: 1,319,013,932</li>
-                <li class="list-group-item">Année : 2019</li>
-                <li class="list-group-item">Consommation E Totale (année : 2019): 12,331,332
-                  <ul class="list-group mt-2">
-                    <li class="list-group-item">Conso agriculture : 242,343</li>
-                    <li class="list-group-item">Conso tertiaire : 9,882</li>
-                    <li class="list-group-item">Conso Industrie : 8,987</li>
-                    <li class="list-group-item">Conso Autre : 9,809</li>
-                    <li class="list-group-item">Conso résidentielle : 32,932</li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-            <div class="card-body">
-            <a href="#" class="card-link">2019</a>
-            <a href="#" class="card-link">2020</a>
-            <a href="#" class="card-link">2020</a>
-
-            </div>
-        </div>
+        <div class="col d-flex justify-content-center align-items-center mt-5">
+          <div id="carte">
+            <div class="titre">
+              <div class=" mb-5" style="max-width: 95%;height: 300px;">
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    <img src="./EDF-Electricite-de-France-Logo-2005-2048x1288-3993129216.png" class="img-fluid rounded-start" alt="...">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h1 class="card-title mt-4"><strong>Econso Département</strong></h1>
+                      <p class="card-text">Cliquer sur un département pour découvrir sa consomation électrique !</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
         </div>
         
 
