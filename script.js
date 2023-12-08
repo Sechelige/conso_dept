@@ -92,7 +92,8 @@ function createCard(departement) {
                 }
             ]
         }
-    };//executerRequeteSPARQL(endpointUrl, query_dep);
+    };
+    //executerRequeteSPARQL(endpointUrl, query_dep);
     console.log(data_dep);
     const query_conso = `"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX iut: <https://cours.iut-orsay.fr/npbd/projet/oueyeya/>
@@ -166,5 +167,7 @@ departement.forEach((element) => {
         onClickDepartement(element.replace('dep_', ''));
     });
 });
+
+
 
 
