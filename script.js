@@ -2,7 +2,7 @@
 const departement = ['dep_01', 'dep_02', 'dep_03', 'dep_04', 'dep_05', 'dep_06', 'dep_07', 'dep_08', 'dep_09', 'dep_10', 'dep_11', 'dep_12', 'dep_13', 'dep_14', 'dep_15', 'dep_16', 'dep_17', 'dep_18', 'dep_19', 'dep_21', 'dep_22', 'dep_23', 'dep_24', 'dep_25', 'dep_26', 'dep_27', 'dep_28', 'dep_29', 'dep_30', 'dep_31', 'dep_32', 'dep_33', 'dep_34', 'dep_35', 'dep_36', 'dep_37', 'dep_38', 'dep_39', 'dep_40', 'dep_41', 'dep_42', 'dep_43', 'dep_44', 'dep_45', 'dep_46', 'dep_47', 'dep_48', 'dep_49', 'dep_50', 'dep_51', 'dep_52', 'dep_53', 'dep_54', 'dep_55', 'dep_56', 'dep_57', 'dep_58', 'dep_59', 'dep_60', 'dep_61', 'dep_62', 'dep_63', 'dep_64', 'dep_65', 'dep_66', 'dep_67', 'dep_68', 'dep_69', 'dep_70', 'dep_71', 'dep_72', 'dep_73', 'dep_74', 'dep_75', 'dep_76', 'dep_77', 'dep_78', 'dep_79', 'dep_80', 'dep_81', 'dep_82', 'dep_83', 'dep_84', 'dep_85', 'dep_86', 'dep_87', 'dep_88', 'dep_89', 'dep_90', 'dep_91', 'dep_92', 'dep_93', 'dep_94', 'dep_95', 'dep_2A', 'dep_2B']
 // Fonction exécutée lorsqu'un département est cliqué
 
-const endpointUrl = 'http://127.0.0.1:7200/repositories/Projet'; // Exemple avec DBpedia
+const endpointUrl = 'http://127.0.0.1:7200/repositories/test'; // Exemple avec DBpedia
 
 
 function get_flag(departement) {
@@ -35,6 +35,78 @@ function executerRequeteSPARQL(endpointUrl, query) {
         });
 }
 
+async function create_graph() {
+    const query_conso = `
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX iut: <https://cours.iut-orsay.fr/npbd/projet/oueyeya/>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+    SELECT ?annee (SUM(?cA) as ?conso_agriculture) (SUM(?cR) as ?conso_residentiel) (SUM(?cT) as ?conso_tertiaire) (SUM(?cI) as ?conso_Industriel) (SUM(?cAu) as ?conso_autres) WHERE { 
+        
+        ?dep rdf:type iut:Departement ;
+            iut:code ?codeDep;
+            iut:genere ?conso.     
+        ?conso iut:annee ?annee;
+            iut:conso_totale ?consoT;
+            iut:conso_agri ?cA;
+            iut:conso_resi ?cR;
+            iut:conso_tert ?cT;
+            iut:conso_indu ?cI;
+            iut:conso_autre ?cAu.
+        FILTER(?codeDep = '01')
+    }
+    GROUP BY ?annee
+    ORDER BY ?annee
+    `;
+
+    const data_graph = await executerRequeteSPARQL(endpointUrl, query_conso);
+
+    try {
+        if (data_graph.results.bindings.length > 0) {
+            // Traitement des données pour le graphique
+            const labels = data_graph.results.bindings.map(entry => entry.annee.value); // Récupération des années comme libellés
+
+            const datasets = data_graph.head.vars
+                .filter(key => key !== 'annee') // Filtrer les clés autres que 'annee'
+                .map((key, index) => {
+                    const values = data_graph.results.bindings.map(entry => parseInt(entry[key].value));
+                    const colorPalette = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']; // Palette de couleurs pour les datasets
+
+                    return {
+                        label: data_graph.head.vars[index + 1], // Utilisation du label de la clé correspondante
+                        data: values,
+                        backgroundColor: colorPalette[index % colorPalette.length],
+                        borderColor: colorPalette[index % colorPalette.length],
+                        borderWidth: 1
+                    };
+                });
+            // Configuration des options du graphique
+            const options = {
+                scales: {
+                    x: {
+                        stacked: true,
+                    },
+                    y: {
+                        stacked: true
+                    }
+                }
+            };
+
+            // Obtention de la référence du canvas HTML où vous voulez dessiner le graphique
+            const ctx = document.getElementById('stackedBarChart').getContext('2d');
+
+            // Création du graphique de type 'bar' en utilisant les données et les options
+            const data = { labels, datasets };
+            const stackedBarChart = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: options
+            });
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 // Fonction pour générer la carte
 async function createCard(departement) {
@@ -52,33 +124,10 @@ async function createCard(departement) {
               iut:image ?image.
           FILTER(?codeDep = '${departement}')
       }`;
-
-    const query_conso = `"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-      PREFIX iut: <https://cours.iut-orsay.fr/npbd/projet/oueyeya/>
-      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      
-      SELECT ?conso ?consoT ?cA ?cR ?cT ?cI ?cAu WHERE { 
-          
-          ?dep rdf:type iut:Departement ;
-               iut:code ?codeDep;
-               iut:genere ?conso.     
-          ?conso iut:annee ?annee;
-                 iut:conso_totale ?consoT;
-                 iut:conso_agri ?cA;
-                 iut:conso_resi ?cR;
-                 iut:conso_tert ?cT;
-                 iut:conso_indu ?cI;
-                 iut:conso_autre ?cAu.
-          FILTER(?codeDep = '01')
-      }
-      ORDER BY ?codeDep
-      `;
     try {
         const data_dep = await executerRequeteSPARQL(endpointUrl, query_dep)
-        //const data_conso = executerRequeteSPARQL(endpointUrl, query_conso)
 
         if (data_dep.results.bindings.length > 0) {
-            console.log(data_dep);
             const code_dep = data_dep.results.bindings[0].codeDep.value;
             const name_dep = data_dep.results.bindings[0].name.value;
             const flag_dep = data_dep.results.bindings[0].flag.value;
@@ -96,20 +145,21 @@ async function createCard(departement) {
             <h4 class="card-title"> <img src="${flag_dep}" alt="flag" style="width:auto; height:30px; margin-bottom:5px; margin-right:20px;">${name_dep} (${departement})</h4>
             </div>
             <div class="container mt-0">
-            <h6>Données de consommation</h6>
+            <h5>Données de consommation</h5>
             <ul class="list-group mt-3">
-                <li class="list-group-item">Population actuelle du département: ${population_dep}</li>
-                <li class="list-group-item"><a href="#" class="card-link">2019</a>
-                <a href="#" class="card-link">2020</a>
-                <a href="#" class="card-link">2020</a></li>
-                <li class="list-group-item mb-2">Consommation E Totale (année : 2019):
-                <ul class="list-group mt-2">
-                    <li class="list-group-item">Conso agriculture : </li>
-                    <li class="list-group-item">Conso tertiaire : </li>
-                    <li class="list-group-item">Conso Industrie : </li>
-                    <li class="list-group-item">Conso Autre : </li>
-                    <li class="list-group-item">Conso résidentielle : </li>
-                </ul>
+                <li class="list-group-item">Population actuelle du département: <strong> ${population_dep}</strong> habitants</li>
+                <li class="list-group-item mb-2"><strong>Consomation d'électricté par secteur (en KWh)</strong>
+                <style>
+                .chart {
+                  width: 400px; /* Largeur souhaitée */
+                  height: 300px; /* Hauteur souhaitée */
+                  margin: 0 auto;
+                }
+              </style>
+            
+            <div class="chart mt-2">
+            <canvas id="stackedBarChart" width="600" height="400"></canvas>
+            </div>
                 </li>
             </ul>
             </div>
@@ -135,20 +185,7 @@ async function createCard(departement) {
         </div>`;
             return newCard;
         }
-        // if (data_conso.results.bindings.length > 0) {
-        //     const conso_dep = data_conso.results.bindings[0].conso.value;
-        //     const consoT_dep = data_conso.results.bindings[0].consoT.value;
-        //     const cA_dep = data_conso.results.bindings[0].cA.value;
-        //     const cR_dep = data_conso.results.bindings[0].cR.value;
-        //     const cT_dep = data_conso.results.bindings[0].cT.value;
-        //     const cI_dep = data_conso.results.bindings[0].cI.value;
-        //     const cAu_dep = data_conso.results.bindings[0].cAu.value;
-        //     console.log(conso_dep, consoT_dep, cA_dep, cR_dep, cT_dep, cI_dep, cAu_dep);
-        // }
-        // else {
-        //     console.log('Pas de données');
-        // }
-        //const data_conso = executerRequeteSPARQL(endpointUrl, query_conso);
+
     }
     catch (error) {
         console.error(error);
@@ -169,6 +206,7 @@ async function onClickDepartement(departement) {
         carteElement.innerHTML = '';
         carteElement.appendChild(newCard);
         currentCard = newCard;
+        create_graph();
     } catch (error) {
         console.error(error);
     }

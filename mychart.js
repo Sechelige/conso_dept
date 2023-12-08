@@ -14,7 +14,7 @@ function executerRequeteSPARQL(endpointUrl, query) {
 }
 
 async function create_graph() {
-    const endpointUrl = 'http://127.0.0.1:7200/repositories/Projet';
+    const endpointUrl = 'http://127.0.0.1:7200/repositories/test';
     const query = `
                 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
                 PREFIX iut: <https://cours.iut-orsay.fr/npbd/projet/oueyeya/>
