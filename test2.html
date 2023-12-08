@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Graphique Histogramme Empilé avec Chart.js</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div style="width: 80%; margin: 0 auto;">
+    <canvas id="myChart"></canvas>
+  </div>
+
+  <script>
+    function fetchJSON() {
+      return {
+        "head": {
+          "vars": [
+            "annee",
+            "totalConsoT",
+            "totalCA",
+            "totalCR",
+            "totalCT",
+            "totalCI",
+            "totalCAu"
+          ]
+        },
+        "results": {
+          "bindings": [
+            {
+              "annee": { "value": "2011" },
+              "totalConsoT": { "value": "3962580" },
+              "totalCA": { "value": "28496" },
+              "totalCR": { "value": "1977575" },
+              "totalCT": { "value": "737572" },
+              "totalCI": { "value": "1180990" },
+              "totalCAu": { "value": "37948" }
+            },
+            {
+              "annee": { "value": "2012" },
+              "totalConsoT": { "value": "6301807" },
+              "totalCA": { "value": "29907" },
+              "totalCR": { "value": "2123743" },
+              "totalCT": { "value": "2172604" },
+              "totalCI": { "value": "1960070" },
+              "totalCAu": { "value": "15482" }
+            }
+            // ... Ajoutez d'autres entrées de données ici si nécessaire
+          ]
+        }
+      };
+    }
+
+    // Récupérer les données JSON
+    const jsonData = fetchJSON();
+
+    // Extraction des données pour Chart.js
+    const labels = [];
+    const datasets = Object.keys(jsonData.head.vars)
+      .filter(key => key !== 'annee')
+      .map(key => ({
+        label: jsonData.head.vars[key],
+        data: [],
+        backgroundColor: getRandomColor(),
+      }));
+
+    jsonData.results.bindings.forEach(data => {
+      labels.push(data.annee.value);
+      datasets.forEach((dataset, index) => {
+        const key = jsonData.head.vars[index + 1];
+        dataset.data.push(data[key].value);
+      });
+    });
+
+    // Fonction pour obtenir une couleur aléatoire pour chaque dataset
+    function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    // Création du graphique avec Chart.js
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: datasets,
+      },
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            stacked: true,
+          },
+          y: {
+            stacked: true,
+          },
+        },
+      },
+    });
+  </script>
+</body>
+</html>
