@@ -13,17 +13,18 @@
 
   <script>
     function executerRequeteSPARQL() {
-      const endpointUrl = 'https://dbpedia.org/sparql'; // Exemple avec DBpedia
+      const endpointUrl = 'http://127.0.0.:7200/'; // Exemple avec DBpedia
 
       const query = `
-        PREFIX dbo: <http://dbpedia.org/ontology/>
-        PREFIX dbr: <http://dbpedia.org/resource/>
-        SELECT ?country ?population
-        WHERE {
-          ?country a dbo:Country ;
-                   dbo:populationTotal ?population .
-        }
-        LIMIT 10`;
+      REFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+      PREFIX iut: <https://cours.iut-orsay.fr/npbd/projet/oueyeya/>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      
+      SELECT * WHERE { 
+          ?dep rdf:type iut:Departement ;
+              iut:drapeau ?flag.
+          FILTER(?codeDep = '01')
+      }`;
 
       fetch(endpointUrl + '?query=' + encodeURIComponent(query), {
         method: 'GET',
@@ -39,25 +40,7 @@
     }
 
     function afficherResultats(data) {
-      const resultatsDiv = document.getElementById('resultats');
-      resultatsDiv.innerHTML = '<h2>Résultats de la requête SPARQL</h2>';
-
-      if (data.results.bindings.length > 0) {
-        const listeResultats = document.createElement('ul');
-
-        data.results.bindings.forEach(binding => {
-          const pays = binding['country'].value.split('/').pop();
-          const population = binding['population'].value;
-
-          const elementResultat = document.createElement('li');
-          elementResultat.textContent = `${pays} - Population: ${population}`;
-          listeResultats.appendChild(elementResultat);
-        });
-
-        resultatsDiv.appendChild(listeResultats);
-      } else {
-        resultatsDiv.innerHTML += '<p>Aucun résultat trouvé.</p>';
-      }
+      console.log(data);
     }
 
     function afficherErreur(message) {

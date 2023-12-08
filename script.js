@@ -49,7 +49,50 @@ function createCard(departement) {
             iut:image ?image.
         FILTER(?codeDep = '${departement}')
     }`;
-    const data_dep = executerRequeteSPARQL(endpointUrl, query_dep);
+    const data_dep = {
+        "head": {
+            "vars": [
+                "dep",
+                "codeDep",
+                "name",
+                "flag",
+                "population",
+                "image"
+            ]
+        },
+        "results": {
+            "bindings": [
+                {
+                    "dep": {
+                        "type": "uri",
+                        "value": "https://cours.iut-orsay.fr/npbd/projet/oueyeya/departement/01"
+                    },
+                    "codeDep": {
+                        "type": "literal",
+                        "value": "01"
+                    },
+                    "name": {
+                        "xml:lang": "fr",
+                        "type": "literal",
+                        "value": "Ain"
+                    },
+                    "flag": {
+                        "type": "uri",
+                        "value": "http://commons.wikimedia.org/wiki/Special:FilePath/Flag%20of%20Ain.svg"
+                    },
+                    "population": {
+                        "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+                        "type": "literal",
+                        "value": "657856"
+                    },
+                    "image": {
+                        "type": "uri",
+                        "value": "http://commons.wikimedia.org/wiki/Special:FilePath/Rivi%C3%A8re%20d%27Ain%20et%20hameau%20de%20Bombois%20%28Matafelon-Granges%29%20depuis%20Corveissiat.jpg"
+                    }
+                }
+            ]
+        }
+    };//executerRequeteSPARQL(endpointUrl, query_dep);
     console.log(data_dep);
     const query_conso = `"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX iut: <https://cours.iut-orsay.fr/npbd/projet/oueyeya/>
@@ -80,20 +123,22 @@ function createCard(departement) {
 
     // Contenu de la carte
     newCard.innerHTML = `
-      <img src="./EDF-Electricite-de-France-Logo-2005-2048x1288-3993129216.png" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title"></h5>
+        <div class="card" style="width: 18rem;">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+        <h5 class="card-title">Card title</h5>
         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      </div>
-      <ul class="list-group list-group-flush">
+        </div>
+        <ul class="list-group list-group-flush">
         <li class="list-group-item">An item</li>
         <li class="list-group-item">A second item</li>
         <li class="list-group-item">A third item</li>
-      </ul>
-      <div class="card-body">
+        </ul>
+        <div class="card-body">
         <a href="#" class="card-link">Card link</a>
         <a href="#" class="card-link">Another link</a>
-      </div>
+        </div>
+    </div>
     `;
     return newCard;
 }
