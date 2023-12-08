@@ -122,6 +122,7 @@ async function createCard(departement) {
       }`;
     try {
         const data_dep = await executerRequeteSPARQL(endpointUrl, query_dep)
+        //const data_conso = executerRequeteSPARQL(endpointUrl, query_conso)
 
         if (data_dep.results.bindings.length > 0) {
             const code_dep = data_dep.results.bindings[0].codeDep.value;
@@ -129,7 +130,7 @@ async function createCard(departement) {
             const flag_dep = data_dep.results.bindings[0].flag.value;
             const population_dep = data_dep.results.bindings[0].population.value;
             const image_dep = data_dep.results.bindings[0].image.value;
-            //console.log(code_dep, name_dep, flag_dep, population_dep, image_dep);
+            console.log(code_dep, name_dep, flag_dep, population_dep, image_dep);
 
             const newCard = document.createElement('div');
             // Contenu de la carte
@@ -182,7 +183,7 @@ async function createCard(departement) {
         </div>`;
             return newCard;
         }
-
+        
     }
     catch (error) {
         console.error(error);
@@ -203,7 +204,7 @@ async function onClickDepartement(departement) {
         carteElement.innerHTML = '';
         carteElement.appendChild(newCard);
         currentCard = newCard;
-        create_graph();
+create_graph();
     } catch (error) {
         console.error(error);
     }
@@ -225,3 +226,4 @@ departement.forEach((element) => {
 });
 
 
+  
