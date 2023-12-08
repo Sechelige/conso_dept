@@ -25,6 +25,8 @@ WHERE {
         ?depWD wdt:P31 wd:Q6465;
                rdfs:label ?name ;
     }
+    FILTER (LANG(?name) = "fr")
+    FILTER (?codeDep = ?codeWD)
 }
 ```
 
