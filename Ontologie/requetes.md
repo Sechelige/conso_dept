@@ -61,6 +61,7 @@ SELECT * WHERE {
 |-----|---------|---------------|---------------------------------------------------------------------------------------------------------|-------------------|----------------------------------------------------------------------------------------------------------------------|
 | 1   | [iut:departement/01](iut:departement/01) | "01"          | "Ain"@fr                                                                                                | "657856"^^xsd:decimal | [Flag of Ain](http://commons.wikimedia.org/wiki/Special:FilePath/Flag%20of%20Ain.svg) / [Rivière d'Ain et hameau de Bombois (Matafelon-Granges) depuis Corveissiat](http://commons.wikimedia.org/wiki/Special:FilePath/Rivi%C3%A8re%20d%27Ain%20et%20hameau%20de%20Bombois%20%28Matafelon-Granges%29%20depuis%20Corveissiat.jpg) |
 
+
 # Requête 3 : Récupérer les consommations électriques par département
 
 ```sparql
@@ -84,6 +85,7 @@ SELECT ?conso ?consoT ?cA ?cR ?cT ?cI ?cAu WHERE {
 }
 ORDER BY ?codeDep
 ```
+
 # Résultats de la consommation par département
 
 | conso | consoT  | cA    | cR     | cT   | cI    | cAu   |
