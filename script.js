@@ -1,10 +1,7 @@
-
-const departement = ['dep_01', 'dep_02', 'dep_03', 'dep_04', 'dep_05', 'dep_06', 'dep_07', 'dep_08', 'dep_09', 'dep_10', 'dep_11', 'dep_12', 'dep_13', 'dep_14', 'dep_15', 'dep_16', 'dep_17', 'dep_18', 'dep_19', 'dep_21', 'dep_22', 'dep_23', 'dep_24', 'dep_25', 'dep_26', 'dep_27', 'dep_28', 'dep_29', 'dep_30', 'dep_31', 'dep_32', 'dep_33', 'dep_34', 'dep_35', 'dep_36', 'dep_37', 'dep_38', 'dep_39', 'dep_40', 'dep_41', 'dep_42', 'dep_43', 'dep_44', 'dep_45', 'dep_46', 'dep_47', 'dep_48', 'dep_49', 'dep_50', 'dep_51', 'dep_52', 'dep_53', 'dep_54', 'dep_55', 'dep_56', 'dep_57', 'dep_58', 'dep_59', 'dep_60', 'dep_61', 'dep_62', 'dep_63', 'dep_64', 'dep_65', 'dep_66', 'dep_67', 'dep_68', 'dep_69', 'dep_70', 'dep_71', 'dep_72', 'dep_73', 'dep_74', 'dep_75', 'dep_76', 'dep_77', 'dep_78', 'dep_79', 'dep_80', 'dep_81', 'dep_82', 'dep_83', 'dep_84', 'dep_85', 'dep_86', 'dep_87', 'dep_88', 'dep_89', 'dep_90', 'dep_91', 'dep_92', 'dep_93', 'dep_94', 'dep_95', 'dep_2A', 'dep_2B']
-// Fonction exécutée lorsqu'un département est cliqué
-
+const departement = ['dep_01', 'dep_02', 'dep_03', 'dep_04', 'dep_05', 'dep_06', 'dep_07', 'dep_08', 'dep_09', 'dep_10', 'dep_11', 'dep_12', 'dep_13', 'dep_14', 'dep_15', 'dep_16', 'dep_17', 'dep_18', 'dep_19', 'dep_21', 'dep_22', 'dep_23', 'dep_24', 'dep_25', 'dep_26', 'dep_27', 'dep_28', 'dep_29', 'dep_30', 'dep_31', 'dep_32', 'dep_33', 'dep_34', 'dep_35', 'dep_36', 'dep_37', 'dep_38', 'dep_39', 'dep_40', 'dep_41', 'dep_42', 'dep_43', 'dep_44', 'dep_45', 'dep_46', 'dep_47', 'dep_48', 'dep_49', 'dep_50', 'dep_51', 'dep_52', 'dep_53', 'dep_54', 'dep_55', 'dep_56', 'dep_57', 'dep_58', 'dep_59', 'dep_60', 'dep_61', 'dep_62', 'dep_63', 'dep_64', 'dep_65', 'dep_66', 'dep_67', 'dep_68', 'dep_69', 'dep_70', 'dep_71', 'dep_72', 'dep_73', 'dep_74', 'dep_75', 'dep_76', 'dep_77', 'dep_78', 'dep_79', 'dep_80', 'dep_81', 'dep_82', 'dep_83', 'dep_84', 'dep_85', 'dep_86', 'dep_87', 'dep_88', 'dep_89', 'dep_90', 'dep_91', 'dep_92', 'dep_93', 'dep_94', 'dep_95', 'dep_2A', 'dep_2B'];
 const endpointUrl = 'http://127.0.0.1:7200/repositories/test'; // Exemple avec DBpedia
 
-
+// Fonction pour exécuter une requête SPARQL pour récupérer les drapeaux des départements à partir de wikidata
 function get_flag(departement) {
     const query = `
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -20,6 +17,7 @@ function get_flag(departement) {
     return data;
 }
 
+// Fonction pour exécuter une requête SPARQL
 function executerRequeteSPARQL(endpointUrl, query) {
     return fetch(endpointUrl + '?query=' + encodeURIComponent(query), {
         method: 'GET',
@@ -27,7 +25,7 @@ function executerRequeteSPARQL(endpointUrl, query) {
     })
         .then(response => response.json())
         .then(data => {
-            return data; // Retourne les données
+            return data;
         })
         .catch(error => {
             afficherErreur('Erreur lors de la requête SPARQL: ' + error);
@@ -35,6 +33,7 @@ function executerRequeteSPARQL(endpointUrl, query) {
         });
 }
 
+// Fonction pour créer le graphique à partir des données récupérées avec une requête SPARQL (à partir du csv open data)
 async function create_graph() {
     const query_conso = `
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -64,16 +63,16 @@ async function create_graph() {
     try {
         if (data_graph.results.bindings.length > 0) {
             // Traitement des données pour le graphique
-            const labels = data_graph.results.bindings.map(entry => entry.annee.value); // Récupération des années comme libellés
+            const labels = data_graph.results.bindings.map(entry => entry.annee.value);
 
             const datasets = data_graph.head.vars
-                .filter(key => key !== 'annee') // Filtrer les clés autres que 'annee'
+                .filter(key => key !== 'annee')
                 .map((key, index) => {
                     const values = data_graph.results.bindings.map(entry => parseInt(entry[key].value));
-                    const colorPalette = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']; // Palette de couleurs pour les datasets
+                    const colorPalette = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'];
 
                     return {
-                        label: data_graph.head.vars[index + 1], // Utilisation du label de la clé correspondante
+                        label: data_graph.head.vars[index + 1], 
                         data: values,
                         backgroundColor: colorPalette[index % colorPalette.length],
                         borderColor: colorPalette[index % colorPalette.length],
@@ -92,10 +91,7 @@ async function create_graph() {
                 }
             };
 
-            // Obtention de la référence du canvas HTML où vous voulez dessiner le graphique
             const ctx = document.getElementById('stackedBarChart').getContext('2d');
-
-            // Création du graphique de type 'bar' en utilisant les données et les options
             const data = { labels, datasets };
             const stackedBarChart = new Chart(ctx, {
                 type: 'bar',
@@ -133,11 +129,12 @@ async function createCard(departement) {
             const flag_dep = data_dep.results.bindings[0].flag.value;
             const population_dep = data_dep.results.bindings[0].population.value;
             const image_dep = data_dep.results.bindings[0].image.value;
-            console.log(code_dep, name_dep, flag_dep, population_dep, image_dep);
+            //console.log(code_dep, name_dep, flag_dep, population_dep, image_dep);
 
             const newCard = document.createElement('div');
             // Contenu de la carte
-            newCard.innerHTML = `<div class="card">
+            newCard.innerHTML = `
+            <div class="card">
             <div class="image" >
             <img src="${image_dep}" class="card-img-top" style="width: 640px; height: 360px;" alt="...">
             </div>
@@ -145,7 +142,7 @@ async function createCard(departement) {
             <h4 class="card-title"> <img src="${flag_dep}" alt="flag" style="width:auto; height:30px; margin-bottom:5px; margin-right:20px;">${name_dep} (${departement})</h4>
             </div>
             <div class="container mt-0">
-            <h5>Données de consommation</h5>
+            <h5>Données de consommation :</h5>
             <ul class="list-group mt-3">
                 <li class="list-group-item">Population actuelle du département: <strong> ${population_dep}</strong> habitants</li>
                 <li class="list-group-item mb-2"><strong>Consomation d'électricté par secteur (en KWh)</strong>
@@ -174,7 +171,7 @@ async function createCard(departement) {
         else {
             console.log('Pas de données');
             const newCard = document.createElement('div');
-            // Contenu de la carte
+            // Contenu de la carte en cas d'erreur, manque de données
             newCard.innerHTML = `<div class="" style="width: 90%; height: 85%;">
             <div class="image" >
             <img src="./images/nodata.png" class="card-img-top" style="max-width: 100%; max-height: 400px; height: auto;" alt="...">
@@ -192,9 +189,9 @@ async function createCard(departement) {
     }
 }
 
+let currentCard = null;
 
-let currentCard = null; // Stocke la référence de la carte actuelle
-
+// Fonction pour gérer le clic sur un département et afficher la carte correspondante
 async function onClickDepartement(departement) {
     try {
         const newCard = await createCard(departement); // Attendre que la carte soit générée
@@ -212,6 +209,7 @@ async function onClickDepartement(departement) {
     }
 }
 
+// Gestion des événements sur les départements
 departement.forEach((element) => {
     document.getElementById(element).style.fill = '#2d453b';
     document.getElementById(element).addEventListener('mouseover', function () {
