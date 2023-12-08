@@ -24,10 +24,17 @@ WHERE {
           SERVICE <https://query.wikidata.org/bigdata/namespace/wdq/sparql> {
         ?depWD wdt:P31 wd:Q6465;
                rdfs:label ?name ;
+               wdt:P2586 ?codeWD;
+               wdt:P41 ?flag;
+        	   wdt:P1082 ?population;
+       		   wdt:P18 ?image.
     }
     FILTER (LANG(?name) = "fr")
     FILTER (?codeDep = ?codeWD)
 }
+
+    
+
 ```
 
 # Requête 2 : Récupérer les infos d'un département
