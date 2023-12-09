@@ -33,7 +33,7 @@ function executerRequeteSPARQL(endpointUrl, query) {
 }
 
 // Fonction pour créer le graphique à partir des données récupérées avec une requête SPARQL (à partir du csv open data)
-async function create_graph() {
+async function create_graph(departement) {
     const query_conso = `
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX iut: <https://cours.iut-orsay.fr/npbd/projet/oueyeya/>
@@ -51,7 +51,7 @@ async function create_graph() {
             iut:conso_tert ?cT;
             iut:conso_indu ?cI;
             iut:conso_autre ?cAu.
-        FILTER(?codeDep = '01')
+        FILTER(?codeDep = '${departement}')
     }
     GROUP BY ?annee
     ORDER BY ?annee
@@ -198,7 +198,7 @@ async function onClickDepartement(departement) {
         carteElement.innerHTML = '';
         carteElement.appendChild(newCard);
         currentCard = newCard;
-        create_graph();
+        create_graph(departement);
     } catch (error) {
         console.error(error);
     }
