@@ -1,0 +1,10 @@
+Lien du dépot GitHub : https://github.com/Sechelige/conso_dept
+
+Liens de test : 
+- https://e-conso-dep.thomasgllt.fr/
+- http://wavechatapi.ddns.net/conso_dept/
+
+Auteurs: 
+
+Antoine Deurveilher
+Gaëtan Oueyeya
