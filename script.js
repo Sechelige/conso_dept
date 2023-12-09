@@ -71,7 +71,7 @@ async function create_graph() {
                     const colorPalette = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'];
 
                     return {
-                        label: data_graph.head.vars[index + 1], 
+                        label: data_graph.head.vars[index + 1],
                         data: values,
                         backgroundColor: colorPalette[index % colorPalette.length],
                         borderColor: colorPalette[index % colorPalette.length],
@@ -177,7 +177,7 @@ async function createCard(departement) {
         </div>`;
             return newCard;
         }
-        
+
     }
     catch (error) {
         console.error(error);
@@ -198,7 +198,7 @@ async function onClickDepartement(departement) {
         carteElement.innerHTML = '';
         carteElement.appendChild(newCard);
         currentCard = newCard;
-create_graph();
+        create_graph();
     } catch (error) {
         console.error(error);
     }
@@ -220,4 +220,3 @@ departement.forEach((element) => {
 });
 
 
-  

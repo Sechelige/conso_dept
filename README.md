@@ -1,7 +1,10 @@
-# Visu E-Conso ![Consommation d'électricité](https://www.lenergietoutcompris.fr/uploads/images/consommation-electricite.jpg)
+# Conso_dept ![Consommation d'électricité](https://www.lenergietoutcompris.fr/uploads/images/consommation-electricite.jpg)
 
-Visu E-Conso est un projet développé dans le cadre d'un cours universitaire "Nouveaux paradigmes des bases de données". 
-Notre outil permet de visualiser les données de consommation électrique des différents départements français au fil des années.
+Conso_dept est un projet développé dans le cadre d'un cours universitaire sur les paradigmes des bases de données. Il s'agit d'un outil pour visualiser graphiquement les données de consommation électrique des différents départements français au fil des années.
+
+## Objectif
+
+L'objectif principal de ce projet est de fournir une représentation visuelle intuitive et informative des tendances de la consommation électrique par département, en utilisant des données historiques.
 
 ## Fonctionnalités
 
@@ -14,7 +17,7 @@ Notre outil permet de visualiser les données de consommation électrique des di
 
 - **Langages**: JavaScript, HTML, CSS
 - **Bibliothèques**: Bootstrap
-- **Bases de données**: GraphDB, OnToRefine, Protégé
+- **Bases de données**: GraphDB, Protégé et OnToRefine
 
 ## Cloner le Projet
 
@@ -25,5 +28,5 @@ git clone https://github.com/votre_nom_utilisateur/Conso_dept.git
 ```
 
 ## Auteurs
-- [Antoine](https://github.com/Sechelige)
-- [Gaëtan](https://github.com/goueyeya)
+- [Antoine's Profile](lien_vers_profil_Antoine)
+- [Gaetan's Profile](lien_vers_profil_Gaetan)
