@@ -71,25 +71,26 @@ SELECT * WHERE {
 ### Requête 3 : Récupérer les consommations électriques par département
 
 ```sparql
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX iut: <https://cours.iut-orsay.fr/npbd/projet/oueyeya/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns
+    PREFIX iut: https://cours.iut-orsay.fr/npbd/projet/oueyeya/
+    PREFIX rdfs: http://www.w3.org/2000/01/rdf-schema
 
-SELECT ?conso ?consoT ?cA ?cR ?cT ?cI ?cAu WHERE { 
-    
-    ?dep rdf:type iut:Departement ;
-         iut:code ?codeDep;
-         iut:genere ?conso.     
-    ?conso iut:annee ?annee;
-           iut:conso_totale ?consoT;
-           iut:conso_agri ?cA;
-           iut:conso_resi ?cR;
-           iut:conso_tert ?cT;
-           iut:conso_indu ?cI;
-           iut:conso_autre ?cAu.
-    FILTER(?codeDep = '01')
-}
-ORDER BY ?codeDep
+    SELECT ?annee (SUM(?cA) as ?conso_agriculture) (SUM(?cR) as ?conso_residentiel) (SUM(?cT) as ?conso_tertiaire) (SUM(?cI) as ?conso_Industriel) (SUM(?cAu) as ?conso_autres) WHERE { 
+
+        ?dep rdf:type iut:Departement ;
+            iut:code ?codeDep;
+            iut:genere ?conso.
+        ?conso iut:annee ?annee;
+            iut:conso_totale ?consoT;
+            iut:conso_agri ?cA;
+            iut:conso_resi ?cR;
+            iut:conso_tert ?cT;
+            iut:conso_indu ?cI;
+            iut:conso_autre ?cAu.
+        FILTER(?codeDep = '01')
+    }
+    GROUP BY ?annee
+    ORDER BY ?annee
 ```
 
 ##### Résultats de la consommation par département
