@@ -1,4 +1,10 @@
-# Requête 1 : Lier les entités au graphes externes
+# Projet Nouveaux Paradigmes de BD
+
+## Comment puis-je collecter les données sur la consommation électrique générée annuellement par les divers départements français ?
+
+Nous avons décidé afin de répondre à notre question de récupérer différentes informations comme le nom, le drapeau, une image représentative, la population actuelle sur le endpoint de Wikidata.
+
+### Requête 1 : Lier les entités au graphes externes
 
 ```sparql
 prefix iut: <https://cours.iut-orsay.fr/npbd/projet/oueyeya/> 
@@ -37,7 +43,7 @@ WHERE {
 
 ```
 
-# Requête 2 : Récupérer les infos d'un département
+### Requête 2 : Récupérer les infos d'un département
 
 ```sparql
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -55,14 +61,14 @@ SELECT * WHERE {
 }
 ```
 
-# Résultats des informations sur le département
+##### Résultats des informations sur le département
 
 | dep | codeDep | name          | flag                                                                                                    | population        | image                                                                                                                |
 |-----|---------|---------------|---------------------------------------------------------------------------------------------------------|-------------------|----------------------------------------------------------------------------------------------------------------------|
 | 1   | [iut:departement/01](iut:departement/01) | "01"          | "Ain"@fr                                                                                                | "657856"^^xsd:decimal | [Flag of Ain](http://commons.wikimedia.org/wiki/Special:FilePath/Flag%20of%20Ain.svg) / [Rivière d'Ain et hameau de Bombois (Matafelon-Granges) depuis Corveissiat](http://commons.wikimedia.org/wiki/Special:FilePath/Rivi%C3%A8re%20d%27Ain%20et%20hameau%20de%20Bombois%20%28Matafelon-Granges%29%20depuis%20Corveissiat.jpg) |
 
 
-# Requête 3 : Récupérer les consommations électriques par département
+### Requête 3 : Récupérer les consommations électriques par département
 
 ```sparql
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -86,7 +92,7 @@ SELECT ?conso ?consoT ?cA ?cR ?cT ?cI ?cAu WHERE {
 ORDER BY ?codeDep
 ```
 
-# Résultats de la consommation par département
+##### Résultats de la consommation par département
 
 | conso | consoT  | cA    | cR     | cT   | cI    | cAu   |
 |-------|---------|-------|--------|------|-------|-------|

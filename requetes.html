@@ -365,7 +365,10 @@ code {
           : 'default'
     });
   </script>
-<h1 id="requ%C3%AAte-1--lier-les-entit%C3%A9s-au-graphes-externes">Requête 1 : Lier les entités au graphes externes</h1>
+<h1 id="projet-nouveaux-paradigmes-de-bd">Projet Nouveaux Paradigmes de BD</h1>
+<h2 id="comment-puis-je-collecter-les-donn%C3%A9es-sur-la-consommation-%C3%A9lectrique-g%C3%A9n%C3%A9r%C3%A9e-annuellement-par-les-divers-d%C3%A9partements-fran%C3%A7ais">Comment puis-je collecter les données sur la consommation électrique générée annuellement par les divers départements français ?</h2>
+<p>Nous avons décidé afin de répondre à notre question de récupérer différentes informations comme le nom, le drapeau, une image représentative, la population actuelle sur le endpoint de Wikidata.</p>
+<h3 id="requ%C3%AAte-1--lier-les-entit%C3%A9s-au-graphes-externes">Requête 1 : Lier les entités au graphes externes</h3>
 <pre class="hljs"><code><div>prefix iut: &lt;https://cours.iut-orsay.fr/npbd/projet/oueyeya/&gt; 
 prefix dep: &lt;https://cours.iut-orsay.fr/npbd/projet/oueyeya/departement/&gt; 
 prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; 
@@ -401,7 +404,7 @@ WHERE {
     
 
 </div></code></pre>
-<h1 id="requ%C3%AAte-2--r%C3%A9cup%C3%A9rer-les-infos-dun-d%C3%A9partement">Requête 2 : Récupérer les infos d'un département</h1>
+<h3 id="requ%C3%AAte-2--r%C3%A9cup%C3%A9rer-les-infos-dun-d%C3%A9partement">Requête 2 : Récupérer les infos d'un département</h3>
 <pre class="hljs"><code><div>PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
 PREFIX iut: &lt;https://cours.iut-orsay.fr/npbd/projet/oueyeya/&gt;
 PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
@@ -416,7 +419,7 @@ SELECT * WHERE {
     FILTER(?codeDep = '01')
 }
 </div></code></pre>
-<h1 id="r%C3%A9sultats-des-informations-sur-le-d%C3%A9partement">Résultats des informations sur le département</h1>
+<h5 id="r%C3%A9sultats-des-informations-sur-le-d%C3%A9partement">Résultats des informations sur le département</h5>
 <table>
 <thead>
 <tr>
@@ -439,7 +442,7 @@ SELECT * WHERE {
 </tr>
 </tbody>
 </table>
-<h1 id="requ%C3%AAte-3--r%C3%A9cup%C3%A9rer-les-consommations-%C3%A9lectriques-par-d%C3%A9partement">Requête 3 : Récupérer les consommations électriques par département</h1>
+<h3 id="requ%C3%AAte-3--r%C3%A9cup%C3%A9rer-les-consommations-%C3%A9lectriques-par-d%C3%A9partement">Requête 3 : Récupérer les consommations électriques par département</h3>
 <pre class="hljs"><code><div>PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
 PREFIX iut: &lt;https://cours.iut-orsay.fr/npbd/projet/oueyeya/&gt;
 PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
@@ -460,7 +463,7 @@ SELECT ?conso ?consoT ?cA ?cR ?cT ?cI ?cAu WHERE {
 }
 ORDER BY ?codeDep
 </div></code></pre>
-<h1 id="r%C3%A9sultats-de-la-consommation-par-d%C3%A9partement">Résultats de la consommation par département</h1>
+<h5 id="r%C3%A9sultats-de-la-consommation-par-d%C3%A9partement">Résultats de la consommation par département</h5>
 <table>
 <thead>
 <tr>
