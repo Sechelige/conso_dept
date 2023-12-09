@@ -1,6 +1,11 @@
-# Conso_dept ![Consommation d'électricité](https://www.lenergietoutcompris.fr/uploads/images/consommation-electricite.jpg)
+# Econso Département ![Consommation d'électricité](https://www.lenergietoutcompris.fr/uploads/images/consommation-electricite.jpg)
 
-Conso_dept est un projet développé dans le cadre d'un cours universitaire sur les paradigmes des bases de données. Il s'agit d'un outil pour visualiser graphiquement les données de consommation électrique des différents départements français au fil des années.
+Econso Département est un projet développé dans le cadre d'un cours universitaire sur les paradigmes des bases de données. Il s'agit d'un outil pour visualiser graphiquement les données de consommation électrique des différents départements français au fil des années.
+
+## Liens du site 
+
+Lien disponible [ici](https://e-conso-dep.thomasgllt.fr/),
+et [ici](http://wavechatapi.ddns.net/conso_dept/).
 
 ## Objectif
 
