@@ -5,7 +5,7 @@ Econso Département est un projet développé dans le cadre d'un cours universit
 ## Liens du site 
 
 Lien disponible [ici](https://e-conso-dep.thomasgllt.fr/),
-Et [ici](http://wavechatapi.ddns.net/conso_dept/).
+et [ici](http://wavechatapi.ddns.net/conso_dept/).
 
 ## Objectif
 
